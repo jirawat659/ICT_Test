@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>แบบทดสอบความรู้ ICT พื้นฐาน</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --success: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --warning: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            --error: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+            --bg-dark: #0f0f23;
+            --bg-card: rgba(255, 255, 255, 0.05);
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0c0;
+            --border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            min-height: 100vh;
+            background-image:
+                radial-gradient(at 0% 0%, rgba(102, 126, 234, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 0%, rgba(118, 75, 162, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(245, 87, 108, 0.15) 0px, transparent 50%),
+                radial-gradient(at 0% 100%, rgba(79, 172, 254, 0.15) 0px, transparent 50%);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            animation: fadeInDown 0.6s ease-out;
+        }
+
+        h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 3rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #f5576c 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 0 30px rgba(102, 126, 234, 0.3);
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .emoji {
+            font-size: 3rem;
+            display: inline-block;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .timer-display {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.95) 0%, rgba(118, 75, 162, 0.95) 100%);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            margin: -2rem -2rem 2rem -2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .timer-display.hidden {
+            display: none;
+        }
+
+        .timer-content {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .timer-icon {
+            font-size: 2rem;
+        }
+
+        .timer-text {
+            display: flex;
+            flex-direction: column;
+            gap: 0.2rem;
+        }
+
+        .timer-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .timer-value {
+            font-size: 2rem;
+            font-weight: 700;
+            font-family: 'Outfit', monospace;
+            letter-spacing: 2px;
+        }
+
+        .start-btn {
+            padding: 0.8rem 2rem;
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            color: white;
+            font-size: 1rem;
+            font-weight: 600;
+            font-family: 'Outfit', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .start-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 2rem;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        .sidebar {
+            background: var(--bg-card);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+            padding: 2rem;
+            height: fit-content;
+            position: sticky;
+            top: 6rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .sidebar h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .category-btn {
+            width: 100%;
+            padding: 1rem;
+            margin-bottom: 0.8rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-size: 1rem;
+            font-family: 'Inter', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-align: left;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .category-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: width 0.3s ease;
+            z-index: -1;
+        }
+
+        .category-btn:hover::before {
+            width: 100%;
+        }
+
+        .category-btn:hover {
+            transform: translateX(5px);
+            border-color: rgba(102, 126, 234, 0.5);
+            box-shadow: 0 4px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .category-btn.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-color: transparent;
+            transform: scale(1.02);
+            box-shadow: 0 4px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .main-content {
+            background: var(--bg-card);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+            padding: 2.5rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            min-height: 500px;
+        }
+
+        .category-header {
+            margin-bottom: 2rem;
+        }
+
+        .category-header h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .info-badge {
+            display: inline-block;
+            padding: 0.5rem 1.2rem;
+            background: rgba(79, 172, 254, 0.2);
+            border: 1px solid rgba(79, 172, 254, 0.3);
+            border-radius: 50px;
+            color: #4facfe;
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-right: 0.5rem;
+        }
+
+        .question-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-color);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .question-card:hover {
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(102, 126, 234, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .question-card.correct {
+            background: rgba(79, 172, 254, 0.1);
+            border-color: rgba(79, 172, 254, 0.3);
+        }
+
+        .question-card.incorrect {
+            background: rgba(255, 107, 107, 0.1);
+            border-color: rgba(255, 107, 107, 0.3);
+        }
+
+        .question-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .option {
+            display: block;
+            padding: 0.8rem 1.2rem;
+            margin-bottom: 0.5rem;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .option:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(102, 126, 234, 0.4);
+            transform: translateX(5px);
+        }
+
+        .option input[type="radio"] {
+            margin-right: 0.8rem;
+            accent-color: #667eea;
+            cursor: pointer;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 1.2rem;
+            margin-top: 2rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 600;
+            font-family: 'Outfit', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(102, 126, 234, 0.5);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .results {
+            margin-top: 2rem;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 15px;
+            border: 1px solid var(--border-color);
+        }
+
+        .results h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .score-display {
+            text-align: center;
+            padding: 2rem;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.2) 0%, rgba(118, 75, 162, 0.2) 100%);
+            border-radius: 15px;
+            margin-bottom: 1.5rem;
+        }
+
+        .score-number {
+            font-size: 3rem;
+            font-weight: 700;
+            font-family: 'Outfit', sans-serif;
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .score-text {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-top: 0.5rem;
+        }
+
+        .feedback-item {
+            padding: 1rem;
+            margin-bottom: 0.8rem;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .feedback-item.correct {
+            background: rgba(79, 172, 254, 0.15);
+            border-left: 4px solid #4facfe;
+        }
+
+        .feedback-item.incorrect {
+            background: rgba(255, 107, 107, 0.15);
+            border-left: 4px solid #ff6b6b;
+        }
+
+        .feedback-icon {
+            font-size: 1.5rem;
+        }
+
+        .message-box {
+            text-align: center;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-top: 1rem;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .message-box.excellent {
+            background: linear-gradient(135deg, rgba(79, 172, 254, 0.2) 0%, rgba(0, 242, 254, 0.2) 100%);
+            border: 1px solid rgba(79, 172, 254, 0.3);
+            color: #4facfe;
+        }
+
+        .message-box.good {
+            background: linear-gradient(135deg, rgba(250, 112, 154, 0.2) 0%, rgba(254, 225, 64, 0.2) 100%);
+            border: 1px solid rgba(250, 112, 154, 0.3);
+            color: #fa709a;
+        }
+
+        .message-box.poor {
+            background: linear-gradient(135deg, rgba(255, 107, 107, 0.2) 0%, rgba(238, 90, 111, 0.2) 100%);
+            border: 1px solid rgba(255, 107, 107, 0.3);
+            color: #ff6b6b;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes confetti {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: #667eea;
+            animation: confetti 3s linear forwards;
+            z-index: 1000;
+        }
+
+        @media (max-width: 968px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                position: relative;
+                top: 0;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .category-btn {
+                display: inline-block;
+                width: auto;
+                margin-right: 0.5rem;
+            }
+
+            .timer-display {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .timer-value {
+                font-size: 1.5rem;
+            }
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="timer-display hidden" id="timer-bar">
+            <div class="timer-content">
+                <span class="timer-icon">⏱️</span>
+                <div class="timer-text">
+                    <div class="timer-label">เวลาที่ใช้ไป</div>
+                    <div class="timer-value" id="timer-value">00:00:00</div>
+                </div>
+            </div>
+            <button class="start-btn" id="reset-btn" onclick="resetQuiz()">🔄 เริ่มใหม่</button>
+        </div>
+
+        <header>
+            <div class="emoji">🎓</div>
+            <h1>แบบทดสอบความรู้ ICT พื้นฐาน</h1>
+            <p class="subtitle">(Word, Excel, PowerPoint, Windows)</p>
+        </header>
+
+        <div class="main-grid">
+            <aside class="sidebar">
+                <h2>📂 เลือกหมวดวิชา</h2>
+                <button class="category-btn active" data-category="Microsoft Word">📝 Microsoft Word</button>
+                <button class="category-btn" data-category="Microsoft Excel">📊 Microsoft Excel</button>
+                <button class="category-btn" data-category="Microsoft PowerPoint">📽️ Microsoft PowerPoint</button>
+                <button class="category-btn" data-category="Windows & Basics">💻 Windows & Basics</button>
+            </aside>
+
+            <main class="main-content">
+                <div class="category-header">
+                    <h2 id="current-category">Microsoft Word</h2>
+                    <span class="info-badge" id="question-count">จำนวนข้อสอบ: 0 ข้อ</span>
+                    <button class="start-btn" id="start-quiz-btn" onclick="startQuiz()" style="margin-left: 1rem;">▶️
+                        เริ่มทำข้อสอบ</button>
+                </div>
+
+                <form id="quiz-form">
+                    <div id="questions-container"></div>
+                    <button type="submit" class="submit-btn">✅ ส่งคำตอบ / ตรวจคะแนน</button>
+                </form>
+
+                <div id="results" class="results hidden"></div>
+            </main>
+        </div>
+    </div>
+
+    <script src="questions.js"></script>
+    <script>
+        let currentCategory = "Microsoft Word";
+        let userAnswers = {};
+        let timerInterval = null;
+        let startTime = null;
+        let isQuizStarted = false;
+
+        // Initialize
+        window.addEventListener('DOMContentLoaded', () => {
+            setupCategoryButtons();
+            loadQuestions(currentCategory);
+            setupFormSubmit();
+        });
+
+        function setupCategoryButtons() {
+            const buttons = document.querySelectorAll('.category-btn');
+            buttons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    // Update active state
+                    buttons.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+
+                    // Load new category
+                    currentCategory = btn.dataset.category;
+                    loadQuestions(currentCategory);
+
+                    // Reset results and timer
+                    document.getElementById('results').classList.add('hidden');
+                    userAnswers = {};
+                    resetTimer();
+                    isQuizStarted = false;
+                    document.getElementById('start-quiz-btn').style.display = 'inline-block';
+                });
+            });
+        }
+
+        function loadQuestions(category) {
+            const questions = quizDB[category];
+            const container = document.getElementById('questions-container');
+            const categoryHeader = document.getElementById('current-category');
+            const questionCount = document.getElementById('question-count');
+
+            // Update header
+            categoryHeader.textContent = category;
+            questionCount.textContent = `จำนวนข้อสอบ: ${questions.length} ข้อ`;
+
+            // Clear previous questions
+            container.innerHTML = '';
+
+            // Render questions
+            questions.forEach((q, index) => {
+                const card = document.createElement('div');
+                card.className = 'question-card';
+                card.id = `question-${index}`;
+
+                let optionsHTML = '';
+                q.options.forEach((option, optIndex) => {
+                    optionsHTML += `
+                        <label class="option">
+                            <input type="radio" name="q${index}" value="${option}" data-qindex="${index}">
+                            ${option}
+                        </label>
+                    `;
+                });
+
+                card.innerHTML = `
+                    <div class="question-title">${index + 1}. ${q.q}</div>
+                    ${optionsHTML}
+                `;
+
+                container.appendChild(card);
+            });
+
+            // Add change listeners
+            const radios = container.querySelectorAll('input[type="radio"]');
+            radios.forEach(radio => {
+                radio.addEventListener('change', (e) => {
+                    const qIndex = parseInt(e.target.dataset.qindex);
+                    userAnswers[qIndex] = e.target.value;
+
+                    // Start timer on first answer if not started
+                    if (!isQuizStarted) {
+                        startQuiz();
+                    }
+                });
+            });
+        }
+
+        function startQuiz() {
+            if (isQuizStarted) return;
+
+            isQuizStarted = true;
+            startTime = Date.now();
+            document.getElementById('timer-bar').classList.remove('hidden');
+            document.getElementById('start-quiz-btn').style.display = 'none';
+
+            timerInterval = setInterval(updateTimer, 1000);
+        }
+
+        function updateTimer() {
+            if (!startTime) return;
+
+            const elapsed = Date.now() - startTime;
+            const hours = Math.floor(elapsed / 3600000);
+            const minutes = Math.floor((elapsed % 3600000) / 60000);
+            const seconds = Math.floor((elapsed % 60000) / 1000);
+
+            document.getElementById('timer-value').textContent =
+                `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+        }
+
+        function stopTimer() {
+            if (timerInterval) {
+                clearInterval(timerInterval);
+                timerInterval = null;
+            }
+        }
+
+        function resetTimer() {
+            stopTimer();
+            startTime = null;
+            document.getElementById('timer-value').textContent = '00:00:00';
+            document.getElementById('timer-bar').classList.add('hidden');
+        }
+
+        function resetQuiz() {
+            resetTimer();
+            isQuizStarted = false;
+            userAnswers = {};
+            document.getElementById('results').classList.add('hidden');
+            document.getElementById('start-quiz-btn').style.display = 'inline-block';
+
+            // Clear all selections
+            const radios = document.querySelectorAll('input[type="radio"]');
+            radios.forEach(radio => radio.checked = false);
+
+            // Clear feedback
+            const cards = document.querySelectorAll('.question-card');
+            cards.forEach(card => {
+                card.classList.remove('correct', 'incorrect');
+            });
+
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function setupFormSubmit() {
+            const form = document.getElementById('quiz-form');
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                checkAnswers();
+            });
+        }
+
+        function checkAnswers() {
+            stopTimer();
+
+            const questions = quizDB[currentCategory];
+            let score = 0;
+            let feedbackHTML = '';
+
+            questions.forEach((q, index) => {
+                const userAnswer = userAnswers[index];
+                const correctAnswer = q.a;
+                const card = document.getElementById(`question-${index}`);
+
+                if (userAnswer === correctAnswer) {
+                    score++;
+                    card.classList.add('correct');
+                    card.classList.remove('incorrect');
+                    feedbackHTML += `
+                        <div class="feedback-item correct">
+                            <span class="feedback-icon">✅</span>
+                            <span>ข้อ ${index + 1}: ถูกต้อง! (${correctAnswer})</span>
+                        </div>
+                    `;
+                } else {
+                    card.classList.add('incorrect');
+                    card.classList.remove('correct');
+                    feedbackHTML += `
+                        <div class="feedback-item incorrect">
+                            <span class="feedback-icon">❌</span>
+                            <span>ข้อ ${index + 1}: ผิด - คำตอบที่ถูกคือ: <strong>${correctAnswer}</strong></span>
+                        </div>
+                    `;
+                }
+            });
+
+            // Calculate percentage
+            const percentage = (score / questions.length) * 100;
+
+            // Get time elapsed
+            const timeElapsed = document.getElementById('timer-value').textContent;
+
+            // Determine message
+            let messageClass = '';
+            let messageText = '';
+            if (percentage >= 80) {
+                messageClass = 'excellent';
+                messageText = '🌟 ยอดเยี่ยมมาก!';
+                createConfetti();
+            } else if (percentage >= 50) {
+                messageClass = 'good';
+                messageText = '👍 ผ่านเกณฑ์ (พยายามต่อไป)';
+            } else {
+                messageClass = 'poor';
+                messageText = '✌️ ลองทบทวนเนื้อหาแล้วทำใหม่อีกครั้ง';
+            }
+
+            // Display results
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = `
+                <h2>📊 ผลการทดสอบ</h2>
+                <div class="score-display">
+                    <div class="score-number">${score} / ${questions.length}</div>
+                    <div class="score-text">${percentage.toFixed(2)}%</div>
+                    <div class="score-text">⏱️ เวลาที่ใช้: ${timeElapsed}</div>
+                </div>
+                <div class="message-box ${messageClass}">${messageText}</div>
+                <div style="margin-top: 2rem;">
+                    ${feedbackHTML}
+                </div>
+            `;
+            resultsDiv.classList.remove('hidden');
+
+            // Scroll to results
+            resultsDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        function createConfetti() {
+            const colors = ['#667eea', '#764ba2', '#f5576c', '#4facfe', '#00f2fe', '#fa709a', '#fee140'];
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + 'vw';
+                    confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.animationDelay = Math.random() * 0.5 + 's';
+                    document.body.appendChild(confetti);
+
+                    setTimeout(() => confetti.remove(), 3000);
+                }, i * 30);
+            }
+        }
+    </script>
+</body>
+
+</html>
