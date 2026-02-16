@@ -681,6 +681,15 @@
             });
         }
 
+        function shuffleArray(array) {
+            const newArray = [...array]; // clone ป้องกันแก้ต้นฉบับ
+            for (let i = newArray.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+            }
+        return newArray;
+        }
+
         function loadQuestions(category) {
             const questions = quizDB[category];
             const container = document.getElementById('questions-container');
@@ -702,17 +711,17 @@
 
                 let optionsHTML = '';
 
-// สุ่มตัวเลือก
-const shuffledOptions = shuffleArray(q.options);
+                // สุ่มตัวเลือก
+                const shuffledOptions = shuffleArray(q.options);
 
-shuffledOptions.forEach((option) => {
-    optionsHTML += `
-        <label class="option">
-            <input type="radio" name="q${index}" value="${option}" data-qindex="${index}">
-            ${option}
-        </label>
-    `;
-});
+                shuffledOptions.forEach((option) => {
+                    optionsHTML += `
+                    <label class="option">
+                    <input type="radio" name="q${index}" value="${option}" data-qindex="${index}">
+                    ${option}
+                    </label>
+                    `;
+                });
 
                 card.innerHTML = `
                     <div class="question-title">${index + 1}. ${q.q}</div>
