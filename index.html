@@ -701,14 +701,18 @@
                 card.id = `question-${index}`;
 
                 let optionsHTML = '';
-                q.options.forEach((option, optIndex) => {
-                    optionsHTML += `
-                        <label class="option">
-                            <input type="radio" name="q${index}" value="${option}" data-qindex="${index}">
-                            ${option}
-                        </label>
-                    `;
-                });
+
+// สุ่มตัวเลือก
+const shuffledOptions = shuffleArray(q.options);
+
+shuffledOptions.forEach((option) => {
+    optionsHTML += `
+        <label class="option">
+            <input type="radio" name="q${index}" value="${option}" data-qindex="${index}">
+            ${option}
+        </label>
+    `;
+});
 
                 card.innerHTML = `
                     <div class="question-title">${index + 1}. ${q.q}</div>
